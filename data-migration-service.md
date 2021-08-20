@@ -70,7 +70,7 @@ start_replication_task_assessment_run()
 stop_replication_task()
 test_connection()
 
-add_tags_to_resource
+# add_tags_to_resource
 
 welcome
 
