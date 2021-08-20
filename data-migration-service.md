@@ -10,7 +10,7 @@ client = boto3.client('dms')
 
 #### These are the available methods:
 
-* add_tags_to_resource() [1]
+* [add_tags_to_resource()] [1]
 * apply_pending_maintenance_action()
 * can_paginate()
 * cancel_replication_task_assessment_run()
