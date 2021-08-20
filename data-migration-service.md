@@ -12,60 +12,19 @@ client = boto3.client('dms')
 
 * [add_tags_to_resource()](#add_tags_to_resource)
 * [create_endpoint()](#create_endpoint)
-* create_event_subscription()
-* create_replication_instance()
-* create_replication_subnet_group()
-* create_replication_task()
-* delete_certificate()
-* delete_connection()
-* delete_endpoint()
-* delete_event_subscription()
-* delete_replication_instance()
-delete_replication_subnet_group()
-delete_replication_task()
-delete_replication_task_assessment_run()
-describe_account_attributes()
-describe_applicable_individual_assessments()
-describe_certificates()
-describe_connections()
-describe_endpoint_settings()
-describe_endpoint_types()
-describe_endpoints()
-describe_event_categories()
-describe_event_subscriptions()
-describe_events()
-describe_orderable_replication_instances()
-describe_pending_maintenance_actions()
-describe_refresh_schemas_status()
-describe_replication_instance_task_logs()
-describe_replication_instances()
-describe_replication_subnet_groups()
-describe_replication_task_assessment_results()
-describe_replication_task_assessment_runs()
-describe_replication_task_individual_assessments()
-describe_replication_tasks()
-describe_schemas()
-describe_table_statistics()
-generate_presigned_url()
-get_paginator()
-get_waiter()
-import_certificate()
-list_tags_for_resource()
-modify_endpoint()
-modify_event_subscription()
-modify_replication_instance()
-modify_replication_subnet_group()
-modify_replication_task()
-move_replication_task()
-reboot_replication_instance()
-refresh_schemas()
-reload_tables()
-remove_tags_from_resource()
-start_replication_task()
-start_replication_task_assessment()
-start_replication_task_assessment_run()
-stop_replication_task()
-test_connection()
+* [create_event_subscription()](#create_event_subscription)
+* [create_replication_instance()](#create_replication_instance)
+* [create_replication_task()](#create_replication_task)
+* [reboot_replication_instance()](#reboot_replication_instance)
+* [refresh_schemas()](#refresh_schemas)
+* [reload_tables()](#reload_tabl* [es))
+* [start_replication_task()](#](#es))
+* [start_replication_task()])s* [tart_replication_task)
+* [start_replica](#tart_replication_task)
+* [start_repli)t* [ion_task_assessment()](](#ion_task_assessment())#* [start_replication](#start_replicati)_task_assessment)
+* [start_replication_task_assessment_run()](#start_replication_task_assessment_run)
+* [stop_replication_task()](#stop_replication_task)
+* [test_connection()](#test_connection)
 
 #### add_tags_to_resource
 Adds metadata tags to an DMS resource, including replication instance, endpoint, security group, and migration task. These tags can also be used with cost allocation reporting to track cost associated with DMS resources, or used in a Condition statement in an IAM policy for DMS
@@ -579,6 +538,79 @@ response = client.create_replication_task(
 
 print(response)
 ```
+#### reboot_replication_instance
+Reboots a replication instance. Rebooting results in a momentary outage, until the replication instance becomes available again.
+```python
+response = client.reboot_replication_instance(
+    ReplicationInstanceArn='string',
+    ForceFailover=True|False
+)
+```
+- ReplicationInstanceArn: The Amazon Resource Name (ARN) of the replication instance.
+- ForceFailover (boolean) -- If this parameter is true , the reboot is conducted through a Multi-AZ failover. (If the instance isn't configured for Multi-AZ, then you can't specify true .)
+- Exception:
+        - DatabaseMigrationService.Client.exceptions.ResourceNotFoundFault
+        - DatabaseMigrationService.Client.exceptions.InvalidResourceStateFault 
+
+#### start_replication_task
+tarts the replication task.
+
+For more information about DMS tasks, see Working with Migration Tasks in the Database Migration Service User Guide.
+```python
+response = client.start_replication_task(
+    ReplicationTaskArn='string',
+    StartReplicationTaskType='start-replication'|'resume-processing'|'reload-target',
+    CdcStartTime=datetime(2015, 1, 1),
+    CdcStartPosition='string',
+    CdcStopPosition='string'
+)
+```
+- StartReplicationTaskType: A type of replication task.
+- CdcStartTime: Indicates the start time for a change data capture (CDC) operation. Use either CdcStartTime or CdcStartPosition to specify when you want a CDC operation to start. Specifying both values results in an error. Timestamp Example: --cdc-start-time “2018-03-08T12:12:12”
+- CdcStartPosition: The value can be in date, checkpoint, or LSN/SCN format. Date Example: --cdc-start-position “2018-03-08T12:12:12”
 
 
+#### start_replication_task_assessment
+```python
+response = client.start_replication_task_assessment(
+    ReplicationTaskArn='string'
+)
+```
+#### stop_replication_task
+```python
+response = client.stop_replication_task(
+    ReplicationTaskArn='string'
+)
+```
+
+#### test_connection
+```python
+response = client.test_connection(
+    ReplicationInstanceArn='string',
+    EndpointArn='string'
+)
+```
+
+
+#### reload_tables
+Reloads the target database table with the source data.
+
+```python
+response = client.reload_tables(
+    ReplicationTaskArn='string',
+    TablesToReload=[
+        {
+            'SchemaName': 'string',
+            'TableName': 'string'
+        },
+    ],
+    ReloadOption='data-reload'|'validate-only'
+)
+```
+
+- ReplicationTaskArn: The Amazon Resource Name (ARN) of the replication task.
+- TablesToReload: The name and schema of the table to be reloaded.
+        - SchemaName: The schema name of the table to be reloaded.
+        - TableName: The table name of the table to be reloaded.
+- ReloadOption: Options for reload. Specify data-reload to reload the data and re-validate it if validation is enabled. Specify validate-only to re-validate the table. This option applies only when validation is enabled for the task. Valid values: data-reload, validate-only, Default value is data-reload. 
 
