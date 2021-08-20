@@ -21,8 +21,6 @@ client = boto3.client('dms')
 * [start_replication_task()](#start_replication_task)
 * [start_replication_task()](#start_replication_task)
 * [start_replication_task_assessment()](#start_replication_task_assessment)
-* [start_replication](#start_replicati)_task_assessment)
-* [start_replication_task_assessment_run()](#start_replication_task_assessment_run)
 * [stop_replication_task()](#stop_replication_task)
 * [test_connection()](#test_connection)
 
